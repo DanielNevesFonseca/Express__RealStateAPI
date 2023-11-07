@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "typeRoots": ["node_modules/@types"],
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "skipLibCheck": true,
+    // configurações adicionais com typeorm
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false,
+    // config para documentação swagger
+    "resolveJsonModule": true,
+    // deploy no render
+    "outDir": "./dist"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}

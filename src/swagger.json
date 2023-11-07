@@ -1,0 +1,340 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "KRealEstate",
+    "description": "API para banco de dados de uma corretora de imóveis",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Development Environment"
+    },
+    {
+      "url": "https://onrender-clientes-api.com",
+      "description": "Production Environiment"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "description": "Rota responsável por buscar todos os usuários cadastrados.",
+        "tags": ["Rotas de usuário sem parâmetro"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array"
+                },
+                "examples": {
+                  "response": {
+                    "value": [
+                      {
+                        "id": 6,
+                        "name": "daniel",
+                        "email": "daniel@mail.com",
+                        "admin": true,
+                        "createdAt": "2023-10-27",
+                        "updatedAt": "2023-10-27",
+                        "deletedAt": null
+                      },
+                      {
+                        "id": 7,
+                        "name": "Rafael",
+                        "email": "rafael@mail.com",
+                        "admin": true,
+                        "createdAt": "2023-11-02",
+                        "updatedAt": "2023-11-02",
+                        "deletedAt": null
+                      },
+                      {
+                        "id": 8,
+                        "name": "Biro",
+                        "email": "biro@mail.com",
+                        "admin": true,
+                        "createdAt": "2023-11-02",
+                        "updatedAt": "2023-11-02",
+                        "deletedAt": null
+                      },
+                      {
+                        "id": 9,
+                        "name": "Davi",
+                        "email": "davi@mail.com",
+                        "admin": true,
+                        "createdAt": "2023-11-02",
+                        "updatedAt": "2023-11-02",
+                        "deletedAt": null
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Rota responsável por cadastrar um usuário.",
+        "tags": ["Rotas de usuário sem parâmetro"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/createUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/createUser"
+                },
+                "examples": {
+                  "user": {
+                    "value": {
+                      "id": 9,
+                      "name": "Davi",
+                      "email": "davi@mail.com",
+                      "admin": true,
+                      "createdAt": "2023-11-02",
+                      "updatedAt": "2023-11-02",
+                      "deletedAt": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "unauthorizedError": {
+                    "value": {
+                      "message": "Missing bearer token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "forbiddenError": {
+                    "value": {
+                      "message": "Insufficient permission"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [{}]
+      }
+    },
+    "/users/:userId": {
+      "patch": {
+        "description": "Rota responsável por fazer a atualização dos dados do usuário cadastrado.",
+        "tags": ["Rotas de usuário com parâmetro"],
+        "parameters": [
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "description": "Id do usuário que deseja buscar",
+            "name": "userId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updateUser",
+                  "type": "object"
+                },
+                "examples": {
+                  "updatedUser": {
+                    "value": {
+                      "id": 6,
+                      "name": "Daniel FullStack",
+                      "email": "daniel@mail.com",
+                      "admin": true,
+                      "createdAt": "2023-10-27",
+                      "updatedAt": "2023-10-27",
+                      "deletedAt": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "aplication/json": {
+                "examples": {
+                  "zodError": {
+                    "value": {
+                      "message": {
+                        "name": ["Expected string, received number"],
+                        "email": ["Expected string, received number"],
+                        "password": ["Expected string, received number"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "unauthorizedError": {
+                    "value": {
+                      "message": "Missing bearer token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "errorNotFound": {
+                    "value": {
+                      "message": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Rota responsável por remover usuário cadastrado.",
+        "tags": ["Rotas de usuário com parâmetro"],
+        "parameters": [
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "description": "Id do usuário que deseja buscar",
+            "name": "userId"
+          }
+        ],
+        "responses": {
+          "204":{
+            "description": "OK",
+            "content": {
+              "aplication/json": {
+                "examples": {
+                  "NoContent": {
+                    "value":{
+                      
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "unauthorizedError": {
+                    "value": {
+                      "message": "Missing bearer token"
+                    }
+                  }
+                }
+              }
+            }
+          },"404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "errorNotFound": {
+                    "value": {
+                      "message": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "createUser": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" },
+          "password": { "type": "string" },
+          "name": { "type": "string" },
+          "admin": { "type": "boolean", "default": "false" }
+        }
+      },
+      "readAllUsers": {
+        "type": "array",
+        "properties": {
+          "id": { "type": "number" },
+          "name": { "type": "string" },
+          "email": { "type": "string" },
+          "admin": { "type": "boolean" },
+          "createdAt": { "type": "string" },
+          "updatedAt": { "type": "string" },
+          "deletedAt": { "type": "string" }
+        }
+      },
+      "updateUser": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string", "nullable": true },
+          "password": { "type": "string", "nullable": true },
+          "name": { "type": "string", "nullable": true }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "JWT": []
+    }
+  ]
+}
