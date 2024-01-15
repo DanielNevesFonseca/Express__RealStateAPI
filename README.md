@@ -1,4 +1,4 @@
-# Projeto Final: KImóveis - TypeORM com Relacionamentos
+# RealStateAPI - TypeORM e Relacionamentos
 
 ## Introdução
 
@@ -7,3 +7,4 @@ Através da aplicação deverá ser possível realizar o cadastro de imóveis e 
 BaseURL do projeto: https://krealestateapi.onrender.com
 
 ### Para acessar todas a documentação do projeto, acesse https://krealestateapi.onrender.com/api-docs.
+<p>Nota: atualmente a api não está no ar por motivos de limitação do render.com nos planos gratuitos.</p>
